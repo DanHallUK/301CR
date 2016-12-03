@@ -29,6 +29,10 @@
         private void InitializeComponent()
         {
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.buttonCreateServer = new System.Windows.Forms.Button();
+            this.buttonJoinServer = new System.Windows.Forms.Button();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.textBoxDebug = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -39,24 +43,71 @@
             this.pictureBox1.Size = new System.Drawing.Size(557, 437);
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
+            this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
+            // 
+            // buttonCreateServer
+            // 
+            this.buttonCreateServer.Location = new System.Drawing.Point(576, 13);
+            this.buttonCreateServer.Name = "buttonCreateServer";
+            this.buttonCreateServer.Size = new System.Drawing.Size(134, 32);
+            this.buttonCreateServer.TabIndex = 1;
+            this.buttonCreateServer.Text = "Create Server";
+            this.buttonCreateServer.UseVisualStyleBackColor = true;
+            this.buttonCreateServer.Click += new System.EventHandler(this.buttonCreateServer_Click);
+            // 
+            // buttonJoinServer
+            // 
+            this.buttonJoinServer.Location = new System.Drawing.Point(716, 14);
+            this.buttonJoinServer.Name = "buttonJoinServer";
+            this.buttonJoinServer.Size = new System.Drawing.Size(134, 31);
+            this.buttonJoinServer.TabIndex = 2;
+            this.buttonJoinServer.Text = "JoinServer";
+            this.buttonJoinServer.UseVisualStyleBackColor = true;
+            this.buttonJoinServer.Click += new System.EventHandler(this.buttonJoinServer_Click);
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(716, 51);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(134, 20);
+            this.textBox1.TabIndex = 3;
+            this.textBox1.Text = "127.0.0.1";
+            // 
+            // textBoxDebug
+            // 
+            this.textBoxDebug.Location = new System.Drawing.Point(576, 89);
+            this.textBoxDebug.Multiline = true;
+            this.textBoxDebug.Name = "textBoxDebug";
+            this.textBoxDebug.Size = new System.Drawing.Size(274, 131);
+            this.textBoxDebug.TabIndex = 4;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(582, 462);
+            this.ClientSize = new System.Drawing.Size(891, 462);
+            this.Controls.Add(this.textBoxDebug);
+            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.buttonJoinServer);
+            this.Controls.Add(this.buttonCreateServer);
             this.Controls.Add(this.pictureBox1);
             this.Name = "Form1";
             this.Text = "Form1";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
 
         private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.Button buttonCreateServer;
+        private System.Windows.Forms.Button buttonJoinServer;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox textBoxDebug;
     }
 }
 
