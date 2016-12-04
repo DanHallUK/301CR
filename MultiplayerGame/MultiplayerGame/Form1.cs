@@ -17,9 +17,11 @@ namespace MultiplayerGame
     public partial class Form1 : Form
     {
         GameEngine gameEngine;
+        MyTcpListener tcpListener;
         bool isServer;
         bool isClient;
-        Thread thread = new Thread(new ThreadStart(MyTcpListener.StartListener));
+        string message;
+        Thread thread;
 
         [DllImport("kernel32.dll", SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
@@ -27,13 +29,25 @@ namespace MultiplayerGame
 
         public Form1()
         {
+            tcpListener = new MyTcpListener();
+            thread = new Thread(new ThreadStart(tcpListener.StartListener));
             AllocConsole();
             InitializeComponent();
+            tcpListener.MessageReceived += TcpListener_MessageReceived;
 
+        }
+
+        private void TcpListener_MessageReceived(object sender, EventArgs e)
+        {
+            string message = tcpListener.Message;
+            string[] values = message.Split(';');
+            gameEngine.Click(new Point(int.Parse(values[0]), int.Parse(values[1])));
+            DrawTheGame();
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            label1.Text = "Your IP Address is: " + Helper.GetLocalIPAddress();
             gameEngine = GameEngine.GetGameEngineInstance(pictureBox1.Size);
             DrawTheGame();
         }
@@ -42,8 +56,11 @@ namespace MultiplayerGame
         {
             MouseEventArgs me = (MouseEventArgs)e;
             Point coordinates = me.Location;
-            gameEngine.Click(new Point(coordinates.X / ApplicationSettings.CellSize.Width, coordinates.Y / ApplicationSettings.CellSize.Height));
+            Point cellPosition = new Point(coordinates.X / ApplicationSettings.CellSize.Width, coordinates.Y / ApplicationSettings.CellSize.Height);
+            gameEngine.Click(cellPosition);
+            message = cellPosition.X + ";" + cellPosition.Y;
             DrawTheGame();
+            MyTcpClient.Connect(textBox1.Text, message);
         }
 
         private void DrawTheGame()
@@ -64,7 +81,7 @@ namespace MultiplayerGame
 
         private void buttonJoinServer_Click(object sender, EventArgs e)
         {
-            MyTcpClient.Connect(textBox1.Text, "Blabla");
+            MyTcpClient.Connect(textBox1.Text, message);
         }
     }
 }

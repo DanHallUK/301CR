@@ -54,6 +54,7 @@
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="GameEngine.cs" />
+    <Compile Include="Helper.cs" />
     <Compile Include="MyTcpClient.cs" />
     <Compile Include="MyTcpListener.cs" />
     <Compile Include="Piece.cs" />

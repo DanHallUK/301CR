@@ -5,15 +5,24 @@ using System.Net.Sockets;
 
 namespace MultiplayerGame
 {
-    static class MyTcpListener
+    class MyTcpListener
     {
-        public static void StartListener()
+        public delegate void ChangedEventHandler(object sender, EventArgs e);
+
+        public event ChangedEventHandler MessageReceived;
+
+        public string Message;
+
+        public void StartListener()
         {
             try
             {
                 // Set the TcpListener on port 13000.
                 Int32 port = 13000;
-                IPAddress localAddr = IPAddress.Parse("127.0.0.1");
+                //IPAddress localAddr = IPAddress.Parse("127.0.0.1");
+                //IPAddress localAddr = IPAddress.Parse("192.168.1.3");
+                IPAddress localAddr = IPAddress.Parse(Helper.GetLocalIPAddress());
+
 
                 // TcpListener server = new TcpListener(port);
                 TcpListener server = new TcpListener(localAddr, port);
@@ -49,6 +58,10 @@ namespace MultiplayerGame
                         data = System.Text.Encoding.ASCII.GetString(bytes, 0, i);
                         Console.WriteLine(String.Format("Received: {0}", data));
 
+                        Message = data;
+                        OnMessageReceived(EventArgs.Empty);
+
+
                         // Process the data sent by the client.
                         data = data.ToUpper();
 
@@ -70,6 +83,11 @@ namespace MultiplayerGame
 
             Console.WriteLine("\nHit enter to continue...");
             Console.Read();
+        }
+
+        protected virtual void OnMessageReceived(EventArgs e)
+        {
+            MessageReceived?.Invoke(this, e);
         }
     }
 }

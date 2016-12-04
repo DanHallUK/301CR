@@ -32,7 +32,7 @@
             this.buttonCreateServer = new System.Windows.Forms.Button();
             this.buttonJoinServer = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
-            this.textBoxDebug = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -73,20 +73,21 @@
             this.textBox1.TabIndex = 3;
             this.textBox1.Text = "127.0.0.1";
             // 
-            // textBoxDebug
+            // label1
             // 
-            this.textBoxDebug.Location = new System.Drawing.Point(576, 89);
-            this.textBoxDebug.Multiline = true;
-            this.textBoxDebug.Name = "textBoxDebug";
-            this.textBoxDebug.Size = new System.Drawing.Size(274, 131);
-            this.textBoxDebug.TabIndex = 4;
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(576, 89);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(35, 13);
+            this.label1.TabIndex = 4;
+            this.label1.Text = "label1";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(891, 462);
-            this.Controls.Add(this.textBoxDebug);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.buttonJoinServer);
             this.Controls.Add(this.buttonCreateServer);
@@ -107,7 +108,7 @@
         private System.Windows.Forms.Button buttonCreateServer;
         private System.Windows.Forms.Button buttonJoinServer;
         private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.TextBox textBoxDebug;
+        private System.Windows.Forms.Label label1;
     }
 }
 
