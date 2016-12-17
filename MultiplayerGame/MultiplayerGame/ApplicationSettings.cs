@@ -20,7 +20,7 @@ namespace MultiplayerGame
         public static Color PieceColorZero = Color.FromArgb(31, 31, 31);
         public static Color PieceColorOne = Color.FromArgb(206, 178, 94);
 
-        public static short RowsOfStartPieces = 2;
+        public static short RowsOfStartPieces = 3;
         public static short WidthOfSelectedBorder = 2;
     }
 }

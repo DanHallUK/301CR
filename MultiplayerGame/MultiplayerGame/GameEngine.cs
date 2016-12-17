@@ -7,6 +7,13 @@ using System.Drawing;
 
 namespace MultiplayerGame
 {
+    enum EColour
+    {
+        UNSET,
+        WHITE,
+        BLACK
+    };
+
     public class GameEngine
     {
         private static GameEngine _gameEngine;
@@ -15,11 +22,22 @@ namespace MultiplayerGame
         private List<Piece> _playerZeroPieces;
         private List<Piece> _playerOnePieces;
         private Piece _selectedPiece;
+        private EColour eColour;
+        private bool bWhiteTurn;
 
         private GameEngine(Size sizeOfDrawing)
         {
             _bitmap = new Bitmap(sizeOfDrawing.Width, sizeOfDrawing.Height);
             _graphics = Graphics.FromImage(_bitmap);
+            eColour = EColour.UNSET;
+            bWhiteTurn = true;
+            StartGame();
+        }
+
+        public void ResetGame()
+        {
+            eColour = EColour.UNSET;
+            bWhiteTurn = true;
             StartGame();
         }
 
@@ -96,10 +114,54 @@ namespace MultiplayerGame
             }
         }
 
-        public void Click(Point cellClicked)
+        public bool Click(Point cellClicked, bool bOpponent = false)
         {
             Piece clickedPiece;
             clickedPiece = _playerZeroPieces.Union(_playerOnePieces).FirstOrDefault(a => a.PieceClicked(cellClicked));
+
+            //Check if it is the correct turn to move this piece
+            if(!(((bWhiteTurn && eColour == EColour.WHITE) || (bOpponent && bWhiteTurn && eColour == EColour.BLACK)) || ((!bWhiteTurn && eColour == EColour.BLACK) || (bOpponent && !bWhiteTurn && eColour == EColour.WHITE))))
+            {
+                return false;
+            }
+
+            if (clickedPiece != null)
+            {
+                if (!bOpponent)
+                {
+                    if (clickedPiece.Color == ApplicationSettings.PieceColorZero) // Black Piece
+                    {
+                        if (eColour == EColour.WHITE)
+                        {
+                            return false;
+                        }
+                    }
+                    if (clickedPiece.Color == ApplicationSettings.PieceColorOne) // White Piece
+                    {
+                        if (eColour == EColour.BLACK)
+                        {
+                            return false;
+                        }
+                    }
+                }
+                else
+                {
+                    if (clickedPiece.Color == ApplicationSettings.PieceColorZero) // Black Piece
+                    {
+                        if (eColour == EColour.BLACK)
+                        {
+                            return false;
+                        }
+                    }
+                    if (clickedPiece.Color == ApplicationSettings.PieceColorOne) // White Piece
+                    {
+                        if (eColour == EColour.WHITE)
+                        {
+                            return false;
+                        }
+                    }
+                }
+            }
 
             //Check if a piece is already selected
             if (_selectedPiece == null)
@@ -107,6 +169,7 @@ namespace MultiplayerGame
                 //Check if a piece was clicked this time
                 if (clickedPiece != null)
                 {
+
                     clickedPiece.IsSelected = true;
                     _selectedPiece = clickedPiece;
                 }
@@ -117,8 +180,8 @@ namespace MultiplayerGame
             }
             else//A piece is already selected
             {
-                //Check if a piece was clicked this time
-                if (clickedPiece != null)
+                    //Check if a piece was clicked this time
+                    if (clickedPiece != null)
                 {
                     //Check if the ckicked piece is the one that is also selected
                     if (clickedPiece == _selectedPiece)
@@ -139,6 +202,7 @@ namespace MultiplayerGame
                         _selectedPiece.Move(cellClicked);
                         _selectedPiece.IsSelected = false;
                         _selectedPiece = null;
+                        bWhiteTurn = !bWhiteTurn;
                     }
                     else if (IsLegalJump(_selectedPiece, _selectedPiece.Position, cellClicked, out middlePiece))
                     {
@@ -153,9 +217,11 @@ namespace MultiplayerGame
                         _selectedPiece.Move(cellClicked);
                         _selectedPiece.IsSelected = false;
                         _selectedPiece = null;
+                        bWhiteTurn = !bWhiteTurn;
                     }
                 }
             }
+            return true;
         }
 
         private bool IsLegalMove(Piece piece, Point from, Point to)
@@ -180,6 +246,18 @@ namespace MultiplayerGame
             if ((piece.IsBottomPiece || piece.CanGoBackward) && from.Y > to.Y) return true;
             if ((piece.IsTopPiece || piece.CanGoBackward) && from.Y < to.Y) return true;
             return false;
+        }
+
+        public void SetColour(bool bIsWhite)
+        {
+            if (bIsWhite)
+            {
+                eColour = EColour.WHITE;
+            }
+            else
+            {
+                eColour = EColour.BLACK;
+            }
         }
     }
 }
