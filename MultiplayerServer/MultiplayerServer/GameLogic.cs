@@ -25,6 +25,7 @@ namespace MultiplayerServer
         private const int iRowsOfPieces = 3;
         private Piece tSelectedPiece;
         private bool bWhiteTurn;
+        private bool bTurnBased = false;
 
         private List<Piece> tPieces;
 
@@ -66,7 +67,7 @@ namespace MultiplayerServer
                 //Check if a piece was clicked this time
                 if (tClickedPiece != null)
                 {
-                    if (tClickedPiece.bIsWhite && bWhiteTurn || !tClickedPiece.bIsWhite && !bWhiteTurn)
+                    if (!bTurnBased || tClickedPiece.bIsWhite && bWhiteTurn || !tClickedPiece.bIsWhite && !bWhiteTurn)
                     {
                         tSelectedPiece = tClickedPiece;
                     }

@@ -120,9 +120,12 @@ namespace MultiplayerGame
             clickedPiece = _playerZeroPieces.Union(_playerOnePieces).FirstOrDefault(a => a.PieceClicked(cellClicked));
 
             //Check if it is the correct turn to move this piece
-            if(!(((bWhiteTurn && eColour == EColour.WHITE) || (bOpponent && bWhiteTurn && eColour == EColour.BLACK)) || ((!bWhiteTurn && eColour == EColour.BLACK) || (bOpponent && !bWhiteTurn && eColour == EColour.WHITE))))
+            if (ApplicationSettings.TurnBased)
             {
-                return false;
+                if (!(((bWhiteTurn && eColour == EColour.WHITE) || (bOpponent && bWhiteTurn && eColour == EColour.BLACK)) || ((!bWhiteTurn && eColour == EColour.BLACK) || (bOpponent && !bWhiteTurn && eColour == EColour.WHITE))))
+                {
+                    return false;
+                }
             }
 
             if (clickedPiece != null)

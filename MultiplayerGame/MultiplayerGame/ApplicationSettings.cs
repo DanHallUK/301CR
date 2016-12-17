@@ -22,5 +22,7 @@ namespace MultiplayerGame
 
         public static short RowsOfStartPieces = 3;
         public static short WidthOfSelectedBorder = 2;
+
+        public const bool TurnBased = false;
     }
 }
