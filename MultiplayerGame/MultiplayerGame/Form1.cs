@@ -42,10 +42,13 @@ namespace MultiplayerGame
 
         private void pictureBox1_Click(object sender, EventArgs e)
         {
+            //Get the mouse position for when the click was done
             MouseEventArgs me = (MouseEventArgs)e;
             Point coordinates = me.Location;
+            //Find in which cell the click occured
             Point cellPosition = new Point(coordinates.X / ApplicationSettings.CellSize.Width, coordinates.Y / ApplicationSettings.CellSize.Height);
 
+            //cancel the click if the user clicked outside the board
             if (cellPosition.X >= ApplicationSettings.BoardSize.Width || cellPosition.Y >= ApplicationSettings.BoardSize.Height)
                 return;
 
@@ -119,11 +122,13 @@ namespace MultiplayerGame
             }
         }
 
+        // Replace the picturebox image with the image containg the new moves
         private void DrawTheGame()
         {
             pictureBox1.Image = gameEngine.Draw();
         }
-
+        
+        //Set the name of the client
         private void SetClientName()
         {
             //Update the client name and set as read only
@@ -136,6 +141,7 @@ namespace MultiplayerGame
             }
         }
 
+        //Disconnect the client from the server
         private void Disconnect()
         {
             if (this.InvokeRequired)
@@ -153,6 +159,7 @@ namespace MultiplayerGame
             }
         }
 
+        //Get the message from the server
         private void GetMessage()
         {
             //Whilst connected to server listen for any messages
@@ -248,6 +255,7 @@ namespace MultiplayerGame
             Disconnect();        
         }
 
+        //Write message to the chat
         private void WriteMessage()
         {
             if (this.InvokeRequired)

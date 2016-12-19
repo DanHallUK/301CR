@@ -25,6 +25,7 @@ namespace MultiplayerGame
         private EColour eColour;
         private bool bWhiteTurn;
 
+        //Constructor for the GameEngine class
         private GameEngine(Size sizeOfDrawing)
         {
             _bitmap = new Bitmap(sizeOfDrawing.Width, sizeOfDrawing.Height);
@@ -34,6 +35,7 @@ namespace MultiplayerGame
             StartGame();
         }
 
+        //Reset the game state, and start the whole game over again
         public void ResetGame()
         {
             eColour = EColour.UNSET;
@@ -41,6 +43,7 @@ namespace MultiplayerGame
             StartGame();
         }
 
+        //Singleton pattern, returns the only instance of the game and it creates it if doesn't exits
         public static GameEngine GetGameEngineInstance(Size sizeOfDrawing)
         {
             if (_gameEngine == null)
@@ -48,6 +51,7 @@ namespace MultiplayerGame
             return _gameEngine;
         }
 
+        //Draw the board and the pieces in a bitmap
         public Bitmap Draw()
         {
             DrawBoard();
@@ -55,11 +59,14 @@ namespace MultiplayerGame
             return _bitmap;
         }
 
+        //Draw the board
         private void DrawBoard()
         {
+            //SolidBrush is used for filling with color
             SolidBrush solidBrush;
             SolidBrush solidBrushZero = new SolidBrush(ApplicationSettings.CellColorZero);
             SolidBrush solidBrushOne = new SolidBrush(ApplicationSettings.CellColorOne);
+            //Pen is used for borders
             Pen pen;
             Rectangle rectangle;
             for (int i = 0; i < ApplicationSettings.BoardSize.Width; i++)
@@ -79,6 +86,7 @@ namespace MultiplayerGame
             _graphics.DrawRectangle(pen, rectangle);
         }
 
+        //Call the Draw function for each piece
         private void DrawPieces()
         {
             foreach (Piece p in _playerZeroPieces.Union(_playerOnePieces))
@@ -87,6 +95,7 @@ namespace MultiplayerGame
             }
         }
 
+        //Initialize each piece and gets the game ready to play
         private void StartGame()
         {
             _playerZeroPieces = new List<Piece>();
@@ -128,6 +137,7 @@ namespace MultiplayerGame
                 }
             }
 
+            //Check if the player clicked its own pieces
             if (clickedPiece != null)
             {
                 if (!bOpponent)
@@ -227,6 +237,7 @@ namespace MultiplayerGame
             return true;
         }
 
+        //Function will check if the player made a legal move
         private bool IsLegalMove(Piece piece, Point from, Point to)
         {
             if (to.X >= ApplicationSettings.BoardSize.Width || to.Y >= ApplicationSettings.BoardSize.Height) return false;
@@ -237,6 +248,7 @@ namespace MultiplayerGame
             return false;
         }
 
+        //Function will check if the player made a legal jump
         private bool IsLegalJump(Piece piece, Point from, Point to, out Piece middlePiece)
         {
             middlePiece = null;
@@ -251,6 +263,7 @@ namespace MultiplayerGame
             return false;
         }
 
+        //Set the color that the player can move
         public void SetColour(bool bIsWhite)
         {
             if (bIsWhite)
