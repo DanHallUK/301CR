@@ -1,0 +1,28 @@
+{
+    "scoresArray":[{
+            "name":"name1",
+            "rating":"1"
+        },
+        {
+            "name":"name2",
+            "rating":"2"
+        },
+        {
+            "name":"name3",
+            "rating":"3"
+        },
+        {
+            "name":"name4",
+            "rating":"4"
+        },
+        {
+            "name":"name5",
+            "rating":"5"
+        },
+        {
+            "name":"name6",
+            "rating":"6"
+        }
+
+    ]
+}
