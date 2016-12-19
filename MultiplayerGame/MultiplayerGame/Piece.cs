@@ -18,6 +18,7 @@ namespace MultiplayerGame
         public bool IsBottomPiece;
         public bool IsTopPiece;
 
+        //Test
         public Piece(Point position, Color color, bool isBottomPiece, bool isTopPiece)
         {
             Position = position;
