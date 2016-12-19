@@ -45,6 +45,10 @@ namespace MultiplayerGame
             MouseEventArgs me = (MouseEventArgs)e;
             Point coordinates = me.Location;
             Point cellPosition = new Point(coordinates.X / ApplicationSettings.CellSize.Width, coordinates.Y / ApplicationSettings.CellSize.Height);
+
+            if (cellPosition.X >= ApplicationSettings.BoardSize.Width || cellPosition.Y >= ApplicationSettings.BoardSize.Height)
+                return;
+
             if (gameEngine.Click(cellPosition))
             {
                 string message = cellPosition.X + ";" + cellPosition.Y;
